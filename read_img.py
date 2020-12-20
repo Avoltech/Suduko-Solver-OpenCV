@@ -1,6 +1,5 @@
 import cv2
-import numpy as np
-from tensorflow.keras.models import load_model
+import pickle
 import numpy as np
 
 
@@ -110,7 +109,7 @@ def solve_this_image(image=None):
 
 	#Load the ML trained model
 	grid_coords = []
-	model = load_model('pretrained model/CNN_model_50_epochs.h5')
+	model = pickle.load(open('pretrained model/svm_model.pkl', 'rb'))
 
 	#Get the location of the digits in the puzzle and
 	#Use the model to predict what digit it is
@@ -125,7 +124,7 @@ def solve_this_image(image=None):
 		cropped_resized = np.expand_dims(cropped_resized, axis=0)
 
 		cropped_resized = cropped_resized.astype('float32')  / 255.0
-		pred = model.predict_classes(cropped_resized) + 1
+		pred = int(model.predict([cropped_resized.flatten()])[0])
 		grid_coords.append([x, y, pred])
 
 	#Displaying the puzzle image and the detected numbers
