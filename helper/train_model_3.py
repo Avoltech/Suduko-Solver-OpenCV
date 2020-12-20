@@ -62,5 +62,5 @@ print(classification_report(
 if not os.path.exists('pretrained model'):
 	os.makedirs('pretrained model/')
 
-pickle.dump(svm, open('pretrained model/svm_model.pkl', 'wb'))
+pickle.dump(svm, open('../pretrained model/svm_model.pkl', 'wb'))
 print("model saved")
